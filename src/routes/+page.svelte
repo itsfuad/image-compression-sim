@@ -29,13 +29,6 @@
         }
     }
 
-    // Ensure N is even and a multiple of 10
-    $: {
-        if (N % 2 !== 0 || N % 10 !== 0) {
-            N = Math.ceil(N / 10) * 10; // Adjust to nearest multiple of 10
-        }
-    }
-
     // Display the uploaded image on the main canvas
     function displayOriginalImage() {
         const img = new Image();
@@ -213,10 +206,12 @@
                 output = groupOddsAndEvens(output, "y"); // Group odd and even strips
                 FinalImages = [...FinalImages, ...output]; // Append to the final images
                 loadedImagesCount++; // Increment the loaded image count
+                if (loadedImagesCount === VerticalImages.length) {
+                    horizontalRunning = false;
+                }
             };
             img.src = VerticalImages[i].url;
         }
-        horizontalRunning = false;
     }
 
     // Split image horizontally into strips of height equal to stripWidth
@@ -342,7 +337,7 @@
         color: white;
         cursor: pointer;
         transition: background-color 0.3s;
-        margin-bottom: 10px;
+        margin: 10px 0;
     }
 
     button:hover {
